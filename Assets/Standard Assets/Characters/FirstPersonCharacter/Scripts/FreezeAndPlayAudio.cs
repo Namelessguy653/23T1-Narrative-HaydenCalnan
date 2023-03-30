@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 //If you see this code please mark the number of hours it has taken to try and fix this: 2 hrs
@@ -7,12 +8,14 @@ using UnityStandardAssets.Characters.FirstPerson;
     public class FreezeAndPlayAudio : MonoBehaviour
     {
         private FirstPersonController firstPersonController;
-        private AudioSource audioSource;
+    
+        public TMP_Text newSubtitle;
+        public TMP_Text currentSubtitle;
+        public TMP_Text nextSubtitle;
 
         void Start()
         {
             firstPersonController = GetComponent<FirstPersonController>();
-            audioSource = GetComponent<AudioSource>();
         }
 
         void OnTriggerEnter(Collider other)
@@ -30,13 +33,25 @@ using UnityStandardAssets.Characters.FirstPerson;
             firstPersonController.enabled = false;
             Debug.Log("Rigid body frozen");
 
-            audioSource.Play();
-            Debug.Log("Audio has been played");
+            currentSubtitle.enabled = false;
+            Debug.Log("Previous subtitle removed");
 
-            Debug.Log("Waiting 10 seconds....");
-            yield return new WaitForSeconds(10f);
+            newSubtitle.enabled = true;
+            Debug.Log("UI Text is enabled");
 
-            firstPersonController.enabled = true;
+            Debug.Log("Waiting 4 seconds....");
+            yield return new WaitForSeconds(4f);
+
+            newSubtitle.enabled = false;
+            Debug.Log("UI Text is enabled");
+
+            nextSubtitle.enabled = true;
+            Debug.Log("next subtitle is active");
+
+            Debug.Log("Waiting 4 seconds....");
+            yield return new WaitForSeconds(4f);
+
+        firstPersonController.enabled = true;
             Debug.Log("Rigid body is no longer frozen");
         }
     }
